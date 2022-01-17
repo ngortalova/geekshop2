@@ -1,0 +1,51 @@
+{% load static %}
+{% load my_tags %}
+<div class="details-products">
+	<div class="details-slider">
+		<div class="slider-product">
+			<img class="details-slider" src="{{ hot_product.image|media_folder_products }}">
+		</div>
+
+	</div>
+
+	<div class="description">
+		<h3 class="big-bold">{{ hot_product.short_description }}</h3>
+		<h3 class="red">горячее предложение</h3>
+		<p class="price"> {{ hot_product.price_with_discount }} <span>руб</span></p>
+		<a href="{% url 'products:product' hot_product.id %}" class="red-button">
+			перейти на страницу продукта <i class="fa fa-chevron-right" aria-hidden="true"></i>
+		</a>
+		<div class="description-text">
+			<p>{{ hot_product.description }}</p>
+			<p>Отличное качество материалов </p>
+			<p>высочайший уровень
+			эргономики и прочность.</p>
+		</div>
+	</div>
+</div>
+<div class="related">
+	<div class="title clearfix">
+		<h2>Похожие продукты</h2>
+		{% if products.has_previous %} <a class="explore"
+		   href="{% url 'products:hpage' products.previous_page_number %}"
+		>Назад  <img src="{% static 'img/arrow.png' %}" alt=""> </a>
+		{% endif %}
+		<a class="explore" href="{% url 'products:index' %}"> показать все <img src="{% static 'img/arrow.png' %}" alt=""></a>
+		{% if products.has_next %}
+		<a class="explore" href="{% url 'products:hpage' products.next_page_number %}"> вперед <img src="{% static 'img/arrow.png' %}" alt=""> </a>
+		{% endif %}
+	</div>
+	<div class="related-products clearfix">
+		{% for item in products %}
+			<div class="block">
+				<a href="{% url 'products:product' item.id %}"><img src="{{ item.image|media_folder_products }}" class="block" alt="">
+					<div class="text">
+						<img src="{% static 'img/icon-hover.png' %}" alt="img">
+						<h4>{{ item.category }}</h4>
+						<p>{{ item.description }} </p>
+					</div>
+				</a>
+			</div>
+		{% endfor %}
+	</div>
+</div>
