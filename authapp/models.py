@@ -34,9 +34,9 @@ class ShopUserProfile(models.Model):
     SMN_ELSE = 'S'
 
     GENDER_CHOICES = (
-        (MALE, 'М'),
-        (FEMALE, 'Ж'),
-        (SMN_ELSE, 'S')
+        (MALE, 'Мужчина'),
+        (FEMALE, 'Женщина'),
+        (SMN_ELSE, 'Небинарный?')
     )
 
     user = models.OneToOneField(ShopUser, unique=True, null=False,\
