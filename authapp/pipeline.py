@@ -19,7 +19,7 @@ def save_user_profile(backend, user, response, *args, **kwargs):
                           None,
                           urlencode(OrderedDict(fields=','.join(('bdate', 'sex', 'about')),
                                                 access_token=response['access_token'],
-                                                v='5.92')),
+                                                v='5.81')),
                           None
                           ))
 
@@ -38,6 +38,7 @@ def save_user_profile(backend, user, response, *args, **kwargs):
         bdate = datetime.strptime(data['bdate'], '%d.%m.%Y').date()
 
         age = timezone.now().date().year - bdate.year
+        user.age = age
         if age < 18:
             user.delete()
             raise AuthForbidden('social_core.backends.vk.VKOAuth2')
