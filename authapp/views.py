@@ -69,10 +69,12 @@ def logout(request):
 
 
 def verify(request, email, key):
+
     user = ShopUser.objects.filter(email=email).first()
+
     if user:
         if user.activation_key == key and not user.is_activation_key_expired():
             user.activate_user()
-            auth.login(request, user)
+            auth.login(request, user, backend='django.contrib.auth.backends.ModelBackend')
     return render(request, 'authapp/verification.html')
 
