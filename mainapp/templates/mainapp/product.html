@@ -13,13 +13,14 @@
         </div>
 
         <div class="description">
-            <h3 class="big-bold">{{ product.short_description }}</h3>
+            <h3 class="big-bold">{{ product.short_description }} </h3>
             <h3 class="red">горячее предложение</h3>
             <p class="price"> {{ product.price_with_discount }} <span>руб</span></p>
             <a href="{% url 'cart:add_to_cart' product.id %}" class="red-button">
                 заказать <i class="fa fa-chevron-right" aria-hidden="true"></i>
             </a>
             <div class="description-text">
+                <p>{{ product.name }}</p>
                 <p>{{ product.description }}</p>
                 <p>Отличное качество материалов </p>
                 <p>высочайший уровень

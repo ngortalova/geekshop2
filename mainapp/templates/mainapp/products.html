@@ -24,6 +24,7 @@
 				перейти на страницу <i class="fa fa-chevron-right" aria-hidden="true"></i>
 			</a>
 			<div class="description-text">
+				<p>{{ products_new.0.name }}</p>
 				<p>{{ products_new.0.description }}</p>
 			</div>
 		</div>
@@ -39,6 +40,7 @@
 						<div class="text">
 							<img src="{% static 'img/icon-hover.png' %}" alt="img">
 							<h4>{{ item.category }}</h4>
+							<p>{{ item.name }} </p>
 							<p>{{ item.description }} </p>
 						</div>
 					</a>
