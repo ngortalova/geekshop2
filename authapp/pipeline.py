@@ -52,6 +52,4 @@ def save_user_profile(backend, user, response, *args, **kwargs):
         with open(photo_full_path, 'wb') as photo_file:
             photo_file.write(photo_data.content)
         user.avatar = photo_path
-
-
     user.save()
