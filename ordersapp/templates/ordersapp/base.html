@@ -19,11 +19,14 @@
    {% endcomment %}
 </head>
 <body>
-  <div class="order_container">
-       {% block content %}
+  <div class="container">
+      <div class="row">
+          <div class="col-12"
+               {% block content %}
 
-       {% endblock %}
-
+               {% endblock %}
+          </div>
+      </div>
   </div>
 </body>
 </html>

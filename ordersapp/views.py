@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView
 
 from cartapp.models import Cart
-from ordersapp.forms import OrderItemForm
+from ordersapp.forms import OrderItemForm, OrderForm
 from ordersapp.models import Order, OrderItem
 
 from django.forms import inlineformset_factory

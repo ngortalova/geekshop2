@@ -25,6 +25,10 @@ class Cart(models.Model):
 
     objects = CartManager()
 
+    @classmethod
+    def get_items(self, user):
+        return Cart.objects.filter(user=user)
+
     @property
     def cost(self):
         return self.product.price * self.quantity
