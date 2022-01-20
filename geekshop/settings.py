@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'authapp',
     'cartapp',
     'adminapp',
+    'ordersapp',
 ]
 
 MIDDLEWARE = [
@@ -72,7 +73,6 @@ TEMPLATES = [
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
 
-                
                 'mainapp.context_processors.cart',
             ],
         },
@@ -156,8 +156,7 @@ EMAIL_USE_SSL = False
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = 'tmp/'
 
-
-#вариант python -m smtpd -n -c DebuggingServer localhost:25
+# вариант python -m smtpd -n -c DebuggingServer localhost:25
 # EMAIL_HOST_USER, EMAIL_HOST_PASSWORD = None, None
 # vk auth
 AUTHENTICATION_BACKENDS = (
