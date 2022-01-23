@@ -38,7 +38,6 @@ class OrderItemsCreate(CreateView):
                 for num, form in enumerate(formset.forms):
                     form.initial['product'] = cart_items[num].product
                     form.initial['quantity'] = cart_items[num].quantity
-                cart_items.delete()
             else:
                 formset = OrderFormSet()
 
@@ -116,4 +115,4 @@ def order_forming_complete(request, pk):
     order.status = Order.SENT_TO_PROCEED
     order.save()
 
-    return HttpResponseRedirect(reverse('ordersapp:orders_list'))
+    return HttpResponseRedirect(reverse('ordersapp:list'))

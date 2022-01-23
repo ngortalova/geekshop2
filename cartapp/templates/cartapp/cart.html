@@ -1,10 +1,12 @@
 {% extends 'cartapp/base.html' %}
 {% load static %}
+{% load my_tags %}
 
 {% block content %}
   <div class="basket_list">
   {% for item in cart_items %}
     <div class="basket_record">
+      <img style='width:5%' src="{{ item.product.image|media_folder_products }}"/>
       <span class="category_name">{{ item.product.category.name }}</span>
       <span class="product_name">{{ item.product.name }}</span>
       <span class="product_price">{{ item.product.price }}&nbspруб</span>

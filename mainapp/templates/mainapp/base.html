@@ -6,9 +6,9 @@
 <head>
 	<meta charset="utf-8">
 	<title>Магазин</title>
-	<link rel="stylesheet" type="text/css" href= "{% static 'style.css' %}" >
 	<link rel="stylesheet" href="{% static 'fonts/font-awesome/css/font-awesome.css' %}">
     <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href= "{% static 'style.css' %}" >
     {% block js %}
     <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
@@ -23,6 +23,7 @@
         </div>
         {% block 'content' %}
         {% endblock %}
+
     </div>
     <div class="footer">
         {% include 'mainapp/include/inc_footer.html' %}

@@ -5,36 +5,37 @@
 {% block 'content' %}
 <div class="details">
 	{% include 'mainapp/include/inc_submenu.html' %}
-	{% if request.resolver_match.url_name == 'index' or request.resolver_match.url_name == 'hpage' %}
+	{% if request.resolver_match.url_name == 'index'%}
 		{% include 'mainapp/include/inc_hot_product.html' %}
-	{% elif request.resolver_match.url_name == 'category' or request.resolver_match.url_name == 'page' %}
+	{% elif request.resolver_match.url_name == 'category'%}
 
 	<div class="details-products">
 		<div class="details-slider">
 			<div class="slider-product">
-				<img src="{{ products_new.0.image|media_folder_products }}" class="slider-product">
+				<img src="{{ object_list.0.image|media_folder_products }}" class="slider-product">
 			</div>
 		</div>
 
 		<div class="description">
-			<h3 class="big-bold">{{ products_new.0.short_description }}</h3>
+			<h3 class="big-bold">{{ object_list.0.short_description }}</h3>
 			<h3 class="red">горячее предложение</h3>
-			<p class="price"> {{ products_new.0.price_with_discount }} <span>руб</span></p>
-			<a href="{% url 'products:product' products_new.0.pk %}" class="red-button">
+			<p class="price"> {{ object_list.0.price_with_discount }} <span>руб</span></p>
+			<a href="{% url 'products:product' object_list.0.pk %}" class="red-button">
 				перейти на страницу <i class="fa fa-chevron-right" aria-hidden="true"></i>
 			</a>
 			<div class="description-text">
-				<p>{{ products_new.0.name }}</p>
-				<p>{{ products_new.0.description }}</p>
+				<p>{{ object_list.0.name }}</p>
+				<p>{{ object_list.0.description }}</p>
 			</div>
 		</div>
 	</div>
+	{% endif %}
 	<div class="related">
 		<div class="title clearfix">
 			<h2>Похожие продукты</h2>
 		</div>
 		<div class="related-products clearfix">
-			{% for item in products_new %}
+			{% for item in object_list %}
 				<div class="block">
 					<a href="{% url 'products:product' item.id %}" ><img src="{{ item.image|media_folder_products }}" class="block" alt="">
 						<div class="text">
@@ -46,9 +47,26 @@
 					</a>
 				</div>
 			{% endfor %}
+			{% block pagination %}
+			  {% if is_paginated %}
+				  <div class="pagination">
+					  <span class="page-links">
+						  {% if page_obj.has_previous %}
+							  <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
+						  {% endif %}
+						  <span class="page-current">
+							  Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+						  </span>
+						  {% if page_obj.has_next %}
+							  <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
+						  {% endif %}
+					  </span>
+				  </div>
+			  {% endif %}
+			{% endblock %}
 		</div>
 	</div>
-	{% endif %}
+
 </div>
 <div class="clr"></div>
 {% endblock %}

@@ -1,5 +1,6 @@
 <div class="header clearfix">
-    <a href="{ % url 'index' %}" class="logo"></a>
+
+    <a href="{% url 'index' %}" class="logo"></a>
     <ul class="menu">
         {% for link in menu_links %}
         <li><a href="{% url link.view_name %}"
@@ -25,6 +26,11 @@
                            заказы
                        </a>
                    </li>
+                   <li>
+                       <a href="{% url 'auth:logout' %}">
+                           выйти
+                       </a>
+                   </li>
                </ul>
            </div>
         </li>
@@ -44,7 +50,7 @@
         <li>
             <a href="{% url 'cart:view' %}"> Корзина
         {% if request.user.cart.has_items %}
-                ({{ request.user.cart.amount }}, {{request.user.cart.total_cost}}р)
+                ({{ request.user.cart.amount }}шт, {{request.user.cart.total_cost}}р)
         {% endif %}</a>
         </li>
 

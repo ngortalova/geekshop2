@@ -3,8 +3,7 @@
 <div class="links clearfix">
     <ul class="links-menu">
         <li>
-            <a href="{% url 'products:index'%}"
-               class = {% if request.resolver_match.view_name == "products:index" or request.resolver_match.view_name == "products:hpage" %} active {% endif %}> ВСЕ
+            <a href="{% url 'products:index'%}" class ={% if request.resolver_match.view_name == "products:index" %} active {% endif %}> ВСЕ
             </a>
         </li>
 
@@ -12,8 +11,8 @@
         {% if category.is_active %}
         <li>
             <a href="{% url 'products:category' category.id %}"
-               class ={% if request.resolver_match.view_name != "products:index" and category.id == selected_category.id %} active {% endif %}
-            >{{ category.name }}
+               class ={% if request.resolver_match.view_name != "products:index" and category.id == category_pk %} active {% endif %}>
+            {{ category.name }}
             </a>
         </li>
         {% endif %}

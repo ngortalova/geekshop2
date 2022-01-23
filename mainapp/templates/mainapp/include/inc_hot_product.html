@@ -24,29 +24,4 @@
 		</div>
 	</div>
 </div>
-<div class="related">
-	<div class="title clearfix">
-		<h2>Похожие продукты</h2>
-		{% if products.has_previous %} <a class="explore"
-		   href="{% url 'products:hpage' products.previous_page_number %}"
-		>Назад  <img src="{% static 'img/arrow.png' %}" alt=""> </a>
-		{% endif %}
-		<a class="explore" href="{% url 'products:index' %}"> показать все <img src="{% static 'img/arrow.png' %}" alt=""></a>
-		{% if products.has_next %}
-		<a class="explore" href="{% url 'products:hpage' products.next_page_number %}"> вперед <img src="{% static 'img/arrow.png' %}" alt=""> </a>
-		{% endif %}
-	</div>
-	<div class="related-products clearfix">
-		{% for item in products %}
-			<div class="block">
-				<a href="{% url 'products:product' item.id %}"><img src="{{ item.image|media_folder_products }}" class="block" alt="">
-					<div class="text">
-						<img src="{% static 'img/icon-hover.png' %}" alt="img">
-						<h4>{{ item.category }}</h4>
-						<p>{{ item.description }} </p>
-					</div>
-				</a>
-			</div>
-		{% endfor %}
-	</div>
-</div>
+

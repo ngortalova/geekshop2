@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
-from django.views.generic import TemplateView
+from django.urls import reverse_lazy
+from django.views.generic import UpdateView, TemplateView
 
 from mainapp.models import Product
 from .models import Cart
@@ -15,6 +16,7 @@ class CartTemplateView(LoginRequiredMixin, TemplateView):
         context['cart_items'] = self.request.user.cart.all()
 
         return context
+
 
 
 @login_required
