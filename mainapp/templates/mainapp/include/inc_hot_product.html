@@ -13,7 +13,7 @@
 		<h3 class="red">горячее предложение</h3>
 		<p class="price"> {{ hot_product.price_with_discount }} <span>руб</span></p>
 		<a href="{% url 'products:product' hot_product.id %}" class="red-button">
-			перейти на страницу продукта <i class="fa fa-chevron-right" aria-hidden="true"></i>
+			перейти на страницу <i class="fa fa-chevron-right" aria-hidden="true"></i>
 		</a>
 		<div class="description-text">
 			<p>{{ hot_product.name }}</p>
