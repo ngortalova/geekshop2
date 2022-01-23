@@ -54,7 +54,7 @@ class ProductDetailView(DetailView):
 class ProductsListView(ListView):
     template_name = 'mainapp/products.html'
     model = Product
-    paginate_by = 2
+    paginate_by = 3
 
     def get_queryset(self):
         queryset = super().get_queryset()
