@@ -36,13 +36,6 @@ class IndexListView(ListView):
         return context
 
 
-def contact(request):
-    return render(request, 'mainapp/contact.html', context={'menu_links': menu_links,
-                                                            'title': 'наши контакты',
-                                                            'container_block_class': "hero",
-                                                            })
-
-
 class ProductDetailView(DetailView):
     model = Product
     template_name = 'mainapp/product.html'
@@ -56,18 +49,6 @@ class ProductDetailView(DetailView):
         data['product_categories'] = ProductCategory.objects.all()
         data['menu_links'] = menu_links
         return data
-
-
-def product(request, pk):
-    product = get_object_or_404(Product, id=pk)
-    product_categories = ProductCategory.objects.all()
-    products_new = Product.objects.filter(category_id=product.category_id, is_active=True)
-    return render(request, 'mainapp/product.html', context={'menu_links': menu_links,
-                                                            'container_block_class': "hero-white",
-                                                            'product': product,
-                                                            'product_categories': product_categories,
-                                                            'products_new': products_new,
-                                                            })
 
 
 class ProductsListView(ListView):
@@ -92,3 +73,10 @@ class ProductsListView(ListView):
         data['category_pk'] = category_pk
 
         return data
+
+
+def contact(request):
+    return render(request, 'mainapp/contact.html', context={'menu_links': menu_links,
+                                                            'title': 'наши контакты',
+                                                            'container_block_class': "hero",
+                                                            })
