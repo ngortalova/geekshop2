@@ -60,6 +60,15 @@ class Order(models.Model):
         self.save()
 
 
+class OrderItemQuerySet(models.QuerySet):
+
+    def delete(self, *args, **kwargs):
+        for item in self:
+            item.product.quantity += item.quantity
+            item.product.save()
+        super().delete(*args, **kwargs)
+
+
 class OrderItem(models.Model):
     order = models.ForeignKey(Order,
                               related_name="orderitems",
@@ -70,5 +79,20 @@ class OrderItem(models.Model):
     quantity = models.PositiveIntegerField(verbose_name='количество',
                                            default=0)
 
+    objects = OrderItemQuerySet.as_manager()
+
     def get_product_cost(self):
         return self.product.price * self.quantity
+
+    def save(self, *args, **kwargs):
+        if self.pk:
+            self.product.quantity -= self.quantity - self.__class__.get_item(self.pk).quantity
+        else:
+            self.product.quantity -= self.quantity
+        self.product.save()
+        super(self.__class__, self).save(*args, **kwargs)
+
+    # @staticmethod
+    # def get_item(pk):
+    #     return OrderItem.objects.get(pk=pk)
+

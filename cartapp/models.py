@@ -15,6 +15,21 @@ class CartManager(models.Manager):
     def total_cost(self):
         return sum(item.product.price * item.quantity for item in self.all())
 
+    # def delete(self, *args, **kwargs):
+    #     for item in self:
+    #         item.product.quantity += item.quantity
+    #         item.product.save()
+    #     super().delete(*args, **kwargs)
+
+
+# class OrderItemQuerySet(models.QuerySet):
+#
+#     def delete(self, *args, **kwargs):
+#         for item in self:
+#             item.product.quantity += item.quantity
+#             item.product.save()
+#         super().delete(*args, **kwargs)
+
 
 class Cart(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="cart",
@@ -32,3 +47,7 @@ class Cart(models.Model):
     @property
     def cost(self):
         return self.product.price * self.quantity
+
+    # @staticmethod
+    # def get_item(pk):
+    #     return Cart.objects.get(pk=pk)
