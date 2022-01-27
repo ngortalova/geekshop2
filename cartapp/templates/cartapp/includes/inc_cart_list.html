@@ -16,9 +16,9 @@
     </div>
 {% endfor %}
 
-{% if cart_items %}
+{% if request.user.cart.has_items %}
     <div class="basket_summary">
-        В корзине {{ cart_items.0.total_quantity }} товаров общей стоимостью
-        {{ cart_items.0.total_cost }} руб
+        В корзине {{ request.user.cart.amount }} товаров общей стоимостью
+                {{ request.user.cart.total_cost }} руб
     </div>
 {% endif %}

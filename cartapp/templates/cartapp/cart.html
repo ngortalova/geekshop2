@@ -4,33 +4,11 @@
 
 {% block content %}
   <div class="basket_list">
-  {% for item in cart_items %}
-    <div class="basket_record">
-      <img style='width:5%' src="{{ item.product.image|media_folder_products }}"/>
-      <span class="category_name">{{ item.product.category.name }}</span>
-      <span class="product_name">{{ item.product.name }}</span>
-      <span class="product_price">{{ item.product.price }}&nbspруб</span>
-      <input type="number" name="{{ item.pk }}"
-                           min="0"
-                           value="{{ item.quantity }}">
-      <span class="product_cost">{{ item.cost }}&nbspруб</span>
-      <button class="btn btn-round">
-        <a href="{% url 'cart:remove_from_cart' item.pk %}" class="">
-          удалить
-        </a>
-      </button>
-    </div>
-  {% endfor %}
-
-  {% if request.user.cart.has_items %}
-    <div class="basket_summary">
-      В корзине {{ request.user.cart.amount }} товаров общей стоимостью
-                {{ request.user.cart.total_cost }} руб
-    </div>
-  {% endif %}
+     {% include 'cartapp/includes/inc_cart_list.html' %}
+  </div>
 
     <button class="btn btn-round">
       <a href="{% url 'index' %}">на главную</a>
     </button>
-  </div>
+
 {% endblock %}
