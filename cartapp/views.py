@@ -1,7 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models.signals import pre_save, pre_delete
 from django.dispatch import receiver
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
+from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView, TemplateView
 
@@ -42,6 +44,28 @@ def remove_from_cart(request, pk):
     return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
 
 
+@login_required
+def api_edit_cart(request, pk, quantity):
+    quantity = int(quantity)
+    new_cart_item = Cart.objects.get(pk=int(pk))
+
+    if quantity > 0:
+        new_cart_item.quantity = quantity
+        new_cart_item.save()
+    else:
+        new_cart_item.delete()
+
+    cart_items = Cart.objects.filter(user=request.user).order_by('product__category')
+
+    content = {
+        'cart_items': cart_items,
+    }
+
+    result = render_to_string('cartapp/includes/inc_cart_list.html', content)
+
+    return JsonResponse({'result': result})
+
+
 # @receiver(pre_save, sender=Cart)
 # def product_quantity_update_save(sender, update_fields, instance, **kwargs):
 #     if update_fields is 'quantity' or 'product':
@@ -57,3 +81,5 @@ def remove_from_cart(request, pk):
 def product_quantity_update_delete(sender, instance, **kwargs):
     instance.product.quantity += instance.quantity
     instance.product.save()
+
+
