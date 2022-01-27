@@ -48,6 +48,6 @@ class Cart(models.Model):
     def cost(self):
         return self.product.price * self.quantity
 
-    # @staticmethod
-    # def get_item(pk):
-    #     return Cart.objects.get(pk=pk)
+    @staticmethod
+    def get_item(pk):
+        return Cart.objects.get(pk=pk)
