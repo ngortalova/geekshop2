@@ -16,28 +16,27 @@ window.onload = function() {
        } else {
            prices[i] = 0;
        }
-        }
+    }
 
     var order_total_quantity = parseInt($('.order_total_quantity').text()) || 0;
     var order_total_cost = parseFloat($('.order_total_cost').text().replace(',', '.')) || 0;
 
     $('.order_form').on('click', 'input[type="number"]', function() {
-        console.log('kjsdfklj');
         var target = event.target;
-        orderitem_num = parseInt(target.name.replace('orderitem-', '').replace('-quantity', ''));
-
+        orderitem_num = parseInt(target.name.replace('orderitems-', '').replace('-quantity', ''));
+        console.log(orderitem_num);
         if(prices[orderitem_num]){
             orderitem_quantity = parseInt(target.value);
             delta_quantity = orderitem_quantity - quantities[orderitem_num];
             quantities[orderitem_num] = orderitem_quantity;
+            console.log(delta_quantity)
             order_summary_update(prices[orderitem_num], delta_quantity)
         }
     });
 
     $('.order_form').on('click', 'input[type=checkbox]', function(){
-        console.log('aaaaaa');
         var target = event.target;
-        orderitem_num = parseInt(target.name.replace('orderitem-', '').replace('-quantity', ''));
+        orderitem_num = parseInt(target.name.replace('orderitems-', '').replace('-quantity', ''));
         if(target.checked){
             delta_quantity = -quantities[orderitem_num];
         } else {
@@ -47,8 +46,9 @@ window.onload = function() {
     });
 
     function order_summary_update(orderitem_price, delta_quantity){
+
         delta_cost = orderitem_price * delta_quantity;
-        order_total_cost = Number((order_total_cost + delta_cost).toFixed(fractionDigits:2));
+        order_total_cost = (Number(order_total_cost)+delta_cost).toFixed(2)
         order_total_quantity = order_total_quantity + delta_quantity;
 
             $('.order_total_quantity').html(order_total_quantity.toString());
