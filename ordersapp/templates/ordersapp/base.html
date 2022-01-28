@@ -14,16 +14,15 @@
    {% block js %}
        <script src="{% static 'js/jquery-3.2.1.min.js' %}" type="text/javascript"></script>
        <script src="{% static 'js/orders_script.js' %}" type="text/javascript"></script>
+       <script src="{% static 'js/jquery.formset.js' %}" type="text/javascript"></script>
    {% endblock %}
 </head>
 <body>
   <div class="container">
       <div class="row">
-          <div class="col-12"
-               {% block content %}
+          {% block content %}
 
-               {% endblock %}
-          </div>
+          {% endblock %}
       </div>
   </div>
 </body>
