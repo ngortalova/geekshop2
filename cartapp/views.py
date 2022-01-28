@@ -8,6 +8,7 @@ from django.urls import reverse_lazy
 from django.views.generic import UpdateView, TemplateView
 
 from mainapp.models import Product
+from ordersapp.models import OrderItem
 from .models import Cart
 from django.contrib.auth.decorators import login_required
 
@@ -67,6 +68,7 @@ def api_edit_cart(request, pk, quantity):
 
 
 @receiver(pre_save, sender=Cart)
+@receiver(pre_save, sender=OrderItem)
 def product_quantity_update_save(sender, update_fields, instance, **kwargs):
     if update_fields is 'quantity' or 'product':
         if instance.pk:
@@ -78,6 +80,7 @@ def product_quantity_update_save(sender, update_fields, instance, **kwargs):
 
 
 @receiver(pre_delete, sender=Cart)
+@receiver(pre_save, sender=OrderItem)
 def product_quantity_update_delete(sender, instance, **kwargs):
     instance.product.quantity += instance.quantity
     instance.product.save()

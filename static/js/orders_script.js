@@ -24,11 +24,14 @@ window.onload = function() {
     $('.order_form').on('click', 'input[type="number"]', function() {
         var target = event.target;
         orderitem_num = parseInt(target.name.replace('orderitems-', '').replace('-quantity', ''));
+
         if(prices[orderitem_num]){
             orderitem_quantity = parseInt(target.value);
             delta_quantity = orderitem_quantity - quantities[orderitem_num];
             quantities[orderitem_num] = orderitem_quantity;
-            console.log(delta_quantity);
+            var sum_price = (quantities[orderitem_num] * prices[orderitem_num]).toFixed(2);
+            console.log(sum_price)
+            $('.orderitems-' + orderitem_num + '-sum_price').html(sum_price.toString())
             order_summary_update(prices[orderitem_num], delta_quantity);
         }
     });
@@ -64,9 +67,7 @@ window.onload = function() {
     $('.formset_row').on('change', 'select', function(event) {
         var target = event.target;
         orderitem_num = parseInt(target.name.replace('orderitems-', '').replace('-quantity', ''))
-        console.log(target.value);
-        console.log(orderitem_num);
-        var product_id = target.options[target.selectedIndex].value;
+        var product_id = target.value;
         if(product_id){
             $.ajax({
                 url: "/order/product/price/"+ product_id + "/",
@@ -82,6 +83,8 @@ window.onload = function() {
                         var current_tr = $('.order_form table').find('tr:eq('+ (orderitem_num + 1) +')');
                         current_tr.find('td:eq(2)').html(price_string);
                         current_tr.find('td:eq(3)').html(sum_price_string);
+                        $('.order_total_quantity').html(order_total_quantity.toString());
+                        $('.order_total_cost').html(order_total_cost.toString());
                     }
 
                 }

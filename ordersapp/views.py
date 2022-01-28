@@ -40,6 +40,7 @@ class OrderItemsCreate(CreateView):
                     form.initial['product'] = cart_items[num].product
                     form.initial['quantity'] = cart_items[num].quantity
                     form.initial['price'] = cart_items[num].product.price
+                    form.initial['sum_price'] = form.initial['price']  * form.initial['quantity']
             else:
                 formset = OrderFormSet()
 
