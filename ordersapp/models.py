@@ -92,7 +92,7 @@ class OrderItem(models.Model):
         self.product.save()
         super(self.__class__, self).save(*args, **kwargs)
 
-    # @staticmethod
-    # def get_item(pk):
-    #     return OrderItem.objects.get(pk=pk)
+    @staticmethod
+    def get_item(pk):
+        return OrderItem.objects.get(pk=pk)
 

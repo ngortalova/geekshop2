@@ -20,6 +20,7 @@ class OrderItemForm(forms.ModelForm):
         exclude = ()
 
     price = forms.CharField(label='цена', required=False)
+    sum_price = forms.CharField(label='сумма', required=False)
 
     def __init__(self, *args, **kwargs):
         super(OrderItemForm, self).__init__(*args, **kwargs)

@@ -30,7 +30,7 @@
                                    {% endfor %}
                                {% endif %}
                                {{ field.errors.as_ul }}
-                               {% if field.name != 'price' %}
+                               {% if field.name != 'price' and field.name != 'sum_price'%}
                                    {{ field }}
                                {% else %}
                                    {% if field.value %}

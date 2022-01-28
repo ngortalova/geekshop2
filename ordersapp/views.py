@@ -1,11 +1,12 @@
 from django.db import transaction
 from django.forms import inlineformset_factory
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 
 from cartapp.models import Cart
+from mainapp.models import Product
 from ordersapp.forms import OrderItemForm, OrderForm
 from ordersapp.models import Order, OrderItem
 
@@ -82,6 +83,7 @@ class OrderItemsUpdate(UpdateView):
             for form in formset.forms:
                 if form.instance.pk:
                     form.initial['price'] = form.instance.product.price
+                    form.initial['sum_price'] = form.instance.product.price * form.initial['quantity']
             data['orderitems'] = formset
         return data
 
@@ -122,3 +124,12 @@ def order_forming_complete(request, pk):
     order.save()
 
     return HttpResponseRedirect(reverse('ordersapp:list'))
+
+
+def get_product_price(request, pk):
+    if request.is_ajax:
+        product_item = Product.objects.filter(pk=pk).first()
+        if product_item:
+            return JsonResponse({"price": product_item.price})
+        return JsonResponse({"price": 0})
+
