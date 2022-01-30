@@ -99,6 +99,11 @@ window.onload = function() {
         orderitem_num = parseInt(target.name.replace('orderitems-', '').replace('-quantity', ''));
         orderitem_quantity = parseInt(target.value);
         var product_id = target.value;
+        if(prices[orderitem_num]){
+                delta_quantity = orderitem_quantity - quantities[orderitem_num];
+                quantities[orderitem_num] = orderitem_quantity;
+                order_summary_update(prices[orderitem_num], delta_quantity, orderitem_num);
+            }
         quantities[orderitem_num] = orderitem_quantity
         $.ajax({
             url: "/order/product/price/"+ product_id + "/",
@@ -108,14 +113,10 @@ window.onload = function() {
             var sum_price_string = '<span>' + sum_price.toString()+ '</span> руб';
             console.log(sum_price_string)
             current_tr.find('td:eq(3)').html(sum_price_string);
-
             }
 
         })
 
-
-
     })
-
 
 }
