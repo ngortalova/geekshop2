@@ -114,9 +114,11 @@ window.onload = function() {
             console.log(sum_price_string)
             current_tr.find('td:eq(3)').html(sum_price_string);
             }
-
         })
-
-    })
+    });
 
 }
+
+
+
+
