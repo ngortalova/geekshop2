@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'social_django',
+    'debug_toolbar',
+    'template_profiler_panel',
 
     'mainapp',
     'authapp',
@@ -90,12 +92,12 @@ DATABASES = {
     #     'NAME': BASE_DIR / 'db.sqlite3',
     # }
     'default': {
-            'NAME': 'geekshop',
-            'ENGINE': 'django.db.backends.postgresql',
-            'USER': 'django',
-            'PASSWORD': 'geekbrains',
-            'HOST': 'localhost'
-        }
+        'NAME': 'geekshop',
+        'ENGINE': 'django.db.backends.postgresql',
+        'USER': 'django',
+        'PASSWORD': 'geekbrains',
+        'HOST': 'localhost'
+    }
 
 }
 
@@ -194,3 +196,5 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.load_extra_data',
     'social_core.pipeline.user.user_details',
 )
+
+API_VERSION = 5.131
