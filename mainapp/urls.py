@@ -1,7 +1,6 @@
-from django.urls import path, re_path, include
-
+from django.urls import path
 import mainapp.views as mainapp
-from geekshop import settings
+
 
 app_name = 'mainapp'
 
@@ -11,7 +10,3 @@ urlpatterns = [
     path('product/<int:pk>/', mainapp.ProductDetailView.as_view(), name='product'),
 ]
 
-if settings.DEBUG:
-    import debug_toolbar
-
-    urlpatterns += [re_path(r'^__debug__/', include(debug_toolbar.urls))]
