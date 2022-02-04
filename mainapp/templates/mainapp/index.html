@@ -1,0 +1,58 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+{% load my_tags %}
+
+	{%block title%}
+	<div class="text-slider">
+		<h3 class="green">тенденции {{ date_now|date:"Y" }}</h3>
+		<h3 class="big"> удобные стулья</h3>
+		<p>Новый уровень комфорта в {%now "Y"%}. Отличные характеристики.</p>
+		<a href="#" class="button-order">заказать <img src="{% static 'img/arrow.png' %}" alt=""></a>
+	</div>
+	<div class="navi">
+		<a href="#"></a><a href="#"></a><a href="#"></a>
+	</div>
+	{% endblock %}
+
+{% block 'content' %}
+	<div class="featured">
+		<div class="featured-menu">
+			{% block pagination %}
+			  {% if is_paginated %}
+					  <span class="page-links">
+						  {% if page_obj.has_previous %}
+							  <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">назад</a>
+						  {% endif %}
+						  <span class="page-current">
+							  Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+						  </span>
+						  {% if page_obj.has_next %}
+							  <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">вперед</a>
+						  {% endif %}
+					  </span>
+			  {% endif %}
+			{% endblock %}
+		</div>
+
+		<div class="clearfix">
+		</div>
+		<div class="tab-content">
+			{% for object in object_list %}
+			<div class="block">
+				<a href="{% url 'products:product' object.id %}"><img src="{{ object.image|media_folder_products }}" class="block" alt="">
+					<div class="text">
+						<img src="{% static 'img/icon-hover.png' %}" alt="">
+						<h3>{{ object.category.name }}</h3>
+						<h4>{{ object.name }}</h4>
+						<p>{{ object.description }}</p>
+					</div>
+				</a>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+
+<div class="clr">
+
+</div>
+{% endblock %}
