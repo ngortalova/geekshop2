@@ -26,7 +26,7 @@ class IndexListView(ListView):
     paginate_by = 4
 
     def get_queryset(self):
-        return super().get_queryset().filter(is_active=True).order_by("price")
+        return super().get_queryset().filter(is_active=True).order_by("price").select_related('category')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
