@@ -17,7 +17,7 @@ menu_links = [
     {'view_name': 'contact', 'active_if': ['contact'], 'name': 'контакты'},
 ]
 
-list_of_products = Product.objects.filter(is_active=True)
+list_of_products = Product.objects.filter(is_active=True).select_related('category')
 
 
 class IndexListView(ListView):
