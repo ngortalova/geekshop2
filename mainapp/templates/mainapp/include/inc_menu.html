@@ -50,7 +50,7 @@
         <li>
             <a href="{% url 'cart:view' %}"> Корзина
         {% if cart %}
-                ({{ request.user.cart.amount }}шт, {{request.user.cart.total_cost}}р)
+                ({{ cart.0.total_quantity }}шт, {{cart.0.total_cost}}р)
         {% endif %}</a>
         </li>
 

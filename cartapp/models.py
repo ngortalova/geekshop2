@@ -1,4 +1,4 @@
-from functools import cached_property
+from django.utils.functional import cached_property
 
 from django.db import models
 from django.conf import settings
@@ -11,10 +11,10 @@ class CartManager(models.Manager):
 
     @property
     def amount(self):
-        return sum(item.quantity for item in self.all())
+        return sum(item.quantity for item in self.all().select_related())
 
     @property
-    def total_cost(self):
+    def _total_cost(self):
         return sum(item.product.price * item.quantity for item in self.all())
 
 
@@ -29,12 +29,24 @@ class Cart(models.Model):
 
     @classmethod
     def get_items(self, user):
-        return Cart.objects.filter(user=user)
+        return Cart.objects.filter(user=user).select_related()
 
-    @cached_property
     def cost(self):
         return self.product.price * self.quantity
 
-    @cached_property
     def get_item(pk):
-        return Cart.objects.get(pk=pk).select_related('product')
+        return Cart.objects.get(pk=pk)
+
+    @cached_property
+    def get_items_cached(self):
+        return self.user.cart.select_related()
+
+    @property
+    def total_quantity(self):
+        _items = self.get_items_cached
+        return sum(list(map(lambda x: x.quantity, _items)))
+
+    @property
+    def total_cost(self):
+        _items = self.get_items_cached
+        return sum(list(map(lambda x: x.cost(), _items)))

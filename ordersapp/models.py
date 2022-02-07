@@ -1,6 +1,8 @@
 from django.db import models
 
 from django.conf import settings
+from django.utils.functional import cached_property
+
 from mainapp.models import Product
 
 
@@ -21,7 +23,7 @@ class Order(models.Model):
         (CANCEL, 'отменен'),
     )
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             on_delete=models.CASCADE)
+                             on_delete=models.CASCADE, related_name='order')
     created = models.DateTimeField(verbose_name='создан', auto_now_add=True)
     updated = models.DateTimeField(verbose_name='обновлен', auto_now=True)
     status = models.CharField(verbose_name='статус',
@@ -42,13 +44,13 @@ class Order(models.Model):
         items = self.orderitems.select_related()
         return sum(list(map(lambda x: x.quantity, items)))
 
-    def get_product_type_quantity(self):
+    def get_summary(self):
         items = self.orderitems.select_related()
-        return len(items)
-
-    def get_total_cost(self):
-        items = self.orderitems.select_related()
-        return sum(list(map(lambda x: x.quantity * x.product.price, items)))
+        return {
+            'total_cost': sum(list(map(lambda x: x.quantity * x.product.price, \
+                                       items))),
+            'total_quantity': sum(list(map(lambda x: x.quantity, items)))
+        }
 
     # переопределяем метод, удаляющий объект
     def delete(self):

@@ -17,7 +17,7 @@ class OrderList(ListView):
     model = Order
 
     def get_queryset(self):
-        return Order.objects.filter(user=self.request.user)
+        return Order.objects.filter(user=self.request.user).select_related()
 
 
 class OrderItemsCreate(CreateView):
@@ -32,7 +32,7 @@ class OrderItemsCreate(CreateView):
         if self.request.POST:
             formset = OrderFormSet(self.request.POST)
         else:
-            cart_items = Cart.get_items(self.request.user)
+            cart_items = Cart.get_items(self.request.user).select_related()
             if len(cart_items):
                 OrderFormSet = inlineformset_factory(Order, OrderItem, form=OrderItemForm, extra=len(cart_items))
                 formset = OrderFormSet()
@@ -60,7 +60,7 @@ class OrderItemsCreate(CreateView):
                 orderitems.save()
 
         # удаляем пустой заказ
-        if self.object.get_total_cost() == 0:
+        if self.object.get_total_quantity == 0:
             self.object.delete()
 
         return super(OrderItemsCreate, self).form_valid(form)
@@ -80,11 +80,12 @@ class OrderItemsUpdate(UpdateView):
         if self.request.POST:
             data['orderitems'] = OrderFormSet(self.request.POST, instance=self.object)
         else:
-            formset = OrderFormSet(instance=self.object)
+            queryset = self.object.orderitems.select_related('product')
+            formset = OrderFormSet(instance=self.object, queryset=queryset)
             for form in formset.forms:
                 if form.instance.pk:
                     form.initial['price'] = form.instance.product.price
-                    form.initial['sum_price'] = form.instance.product.price * form.initial['quantity']
+                    form.initial['sum_price'] = form.initial['price'] * form.initial['quantity']
             data['orderitems'] = formset
         return data
 
@@ -99,7 +100,7 @@ class OrderItemsUpdate(UpdateView):
                 orderitems.save()
 
         # удаляем пустой заказ
-        if self.object.get_total_cost() == 0:
+        if self.object.get_summary.total_cost() == 0:
             self.object.delete()
 
         return super(OrderItemsUpdate, self).form_valid(form)

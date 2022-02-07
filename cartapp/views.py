@@ -18,7 +18,7 @@ class CartTemplateView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context['cart_items'] = self.request.user.cart.all()
+        context['cart_items'] = self.request.user.cart.all().select_related()
 
         return context
 
@@ -56,7 +56,7 @@ def api_edit_cart(request, pk, quantity):
     else:
         new_cart_item.delete()
 
-    cart_items = Cart.objects.filter(user=request.user).order_by('product__category').select_related()
+    cart_items = Cart.objects.filter(user=request.user).order_by('product__category')
 
     content = {
         'cart_items': cart_items,
