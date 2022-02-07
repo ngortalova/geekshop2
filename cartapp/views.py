@@ -56,7 +56,7 @@ def api_edit_cart(request, pk, quantity):
     else:
         new_cart_item.delete()
 
-    cart_items = Cart.objects.filter(user=request.user).order_by('product__category').select_related('category')
+    cart_items = Cart.objects.filter(user=request.user).order_by('product__category').select_related()
 
     content = {
         'cart_items': cart_items,

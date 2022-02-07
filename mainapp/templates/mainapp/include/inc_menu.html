@@ -49,7 +49,7 @@
         {% endif %}
         <li>
             <a href="{% url 'cart:view' %}"> Корзина
-        {% if request.user.cart.has_items %}
+        {% if cart %}
                 ({{ request.user.cart.amount }}шт, {{request.user.cart.total_cost}}р)
         {% endif %}</a>
         </li>
