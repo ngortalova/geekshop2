@@ -1,10 +1,11 @@
 {% extends 'mainapp/base.html' %}
 {% load static %}
+{% load cache %}
 	{% block title %}
 	<h1> {{ title|title }} </h1>
 	{% endblock %}
 {% block 'content'%}
-
+{% cache 3600 page_contact %}
 <div class="location">
 	<div class="location-1">
 		<i class="fa fa-map-marker fa-5x"></i>
@@ -57,5 +58,5 @@
 </div>
 
 <div class="clr"></div>
-
+{% endcache %}
 {% endblock %}
