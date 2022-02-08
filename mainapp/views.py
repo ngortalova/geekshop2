@@ -1,12 +1,12 @@
+from django.core.cache import cache
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from datetime import datetime
 
-from django.views import View
-from django.views.generic import TemplateView, DetailView
+from django.views.generic import DetailView
 
+from geekshop import settings
 from .models import ProductCategory, Product
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic.list import ListView
 
 menu_links = [
@@ -46,7 +46,7 @@ class ProductDetailView(DetailView):
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         data['container_block_class'] = "hero-white"
-        data['product_categories'] = ProductCategory.objects.all()
+        data['product_categories'] = get_links_menu()
         data['menu_links'] = menu_links
         return data
 
@@ -67,7 +67,7 @@ class ProductsListView(ListView):
         data = super().get_context_data(**kwargs)
         category_pk = self.kwargs.get('pk')
         data['container_block_class'] = "hero-white"
-        data['product_categories'] = ProductCategory.objects.all()
+        data['product_categories'] = get_links_menu()
         data['menu_links'] = menu_links
         data['hot_product'] = Product.objects.hot_product
         data['category_pk'] = category_pk
@@ -80,3 +80,15 @@ def contact(request):
                                                             'title': 'наши контакты',
                                                             'container_block_class': "hero",
                                                             })
+
+
+def get_links_menu():
+    if settings.LOW_CACHE:
+        key = 'links_menu'
+        links_menu = cache.get(key)
+        if links_menu is None:
+            links_menu = ProductCategory.objects.filter(is_active=True)
+            cache.set(key, links_menu)
+        return links_menu
+    else:
+        return ProductCategory.objects.filter(is_active=True)
