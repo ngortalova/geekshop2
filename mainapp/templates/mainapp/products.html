@@ -1,0 +1,11 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+{% load my_tags %}
+
+{% block 'content' %}
+<div class="details">
+	{% include 'mainapp/include/inc_submenu.html' %}
+	{% include 'mainapp/include/inc_products_content.html' %}
+</div>
+<div class="clr" ></div>
+{% endblock %}

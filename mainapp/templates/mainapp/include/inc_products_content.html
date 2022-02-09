@@ -1,0 +1,66 @@
+{% load static %}
+{% load my_tags %}
+{% block other_js %}
+<script src="{% static 'js/main_scripts.js' %}"></script>
+{% endblock %}
+
+{% if request.resolver_match.url_name == 'index'%}
+    {% include 'mainapp/include/inc_hot_product.html' %}
+{% else %}
+
+<div class="details-products">
+    <div class="details-slider">
+        <div class="slider-product">
+            <img src="{{ object_list.0.image|media_folder_products }}" class="slider-product">
+        </div>
+    </div>
+    <div class="description">
+        <h3 class="big-bold">{{ object_list.0.short_description }}</h3>
+        <h3 class="red">горячее предложение</h3>
+        <p class="price"> {{ object_list.0.price_with_discount }} <span>руб</span></p>
+        <a href="{% url 'products:product' object_list.0.pk %}" class="red-button">
+            перейти на страницу <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </a>
+        <div class="description-text">
+            <p>{{ object_list.0.name }}</p>
+            <p>{{ object_list.0.description }}</p>
+        </div>
+    </div>
+</div>
+{% endif %}
+<div class="related">
+    <div class="title clearfix">
+        <h2>Похожие продукты</h2>
+    </div>
+    <div class="related">
+        {% block pagination %}
+          {% if is_paginated %}
+                  <span class="page-links">
+                      {% if page_obj.has_previous %}
+                          <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">назад</a>
+                      {% endif %}
+                      <span class="page-current">
+                          Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                      </span>
+                      {% if page_obj.has_next %}
+                          <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">вперед</a>
+                      {% endif %}
+                  </span>
+          {% endif %}
+        {% endblock %}
+        </div>
+    <div class="tab-content">
+        {% for item in object_list %}
+            <div class="block">
+                <a href="{% url 'products:product' item.id %}" ><img src="{{ item.image|media_folder_products }}" class="block" style = "height: 370px; width: 370px" alt="">
+                    <div class="text" style = "height: 370px; width: 370px">
+                        <img src="{% static 'img/icon-hover.png' %}"  alt="img">
+                        <h4>{{ item.category }}</h4>
+                        <p>{{ item.name }} </p>
+                        <p>{{ item.description }} </p>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
