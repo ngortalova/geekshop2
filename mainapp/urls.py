@@ -1,4 +1,6 @@
 from django.urls import path
+from django.views.decorators.cache import cache_page
+
 import mainapp.views as mainapp
 
 
@@ -9,9 +11,7 @@ urlpatterns = [
     path('category/<int:pk>/', mainapp.ProductsListView.as_view(), name='category'),
     path('product/<int:pk>/', mainapp.ProductDetailView.as_view(), name='product'),
     # AJAX
-    path('/ajax', mainapp.ProductsListView.as_view(), name='ajax_index'),
-    path('category/ajax/<int:pk>/', mainapp.ProductsListView.as_view(), name='ajax_category'),
-
+    path('product/<int:pk>/ajax/', cache_page(3600)(mainapp.AjaxProductDetailView.as_view()), name='product_ajax'),
 
 ]
 

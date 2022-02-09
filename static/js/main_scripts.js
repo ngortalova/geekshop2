@@ -2,11 +2,11 @@ $( document ).on( 'click', '.details a', function(event) {
    if (event.target.hasAttribute('href')) {
        var link = event.target.href + 'ajax/';
        var link_array = link.split('/');
-       if (link_array[4] == 'category') {
+       if (link_array[4] == 'product') {
            $.ajax({
                url: link,
                success: function (data) {
-                   $('.details').html(data.result);
+                   $('.details').html(data);
                },
            });
 

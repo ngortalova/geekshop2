@@ -96,31 +96,18 @@ def get_links_menu():
         return ProductCategory.objects.filter(is_active=True)
 
 
-def products_ajax(request, pk=None, page=1):
-    if request.is_ajax():
-        template_name = 'mainapp/products.html'
-        model = Product
-        paginate_by = 3
+class AjaxProductDetailView(DetailView):
+    model = Product
+    template_name = 'mainapp/product.html'
 
-        def get_queryset(self):
-            queryset = super().get_queryset().select_related('category')
-            category_pk = self.kwargs.get('pk')
-            if category_pk:
-                queryset = queryset.filter(category__pk=category_pk)
-            return queryset
+    def get_object(self):
+        return get_object_or_404(Product, id=self.kwargs.get('pk'))
 
-        def get_context_data(self, **kwargs):
-            data = super().get_context_data(**kwargs)
-            category_pk = self.kwargs.get('pk')
-            data['container_block_class'] = "hero-white"
-            data['product_categories'] = get_links_menu()
-            data['menu_links'] = menu_links
-            data['hot_product'] = Product.objects.hot_product
-            data['category_pk'] = category_pk
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['container_block_class'] = "hero-white"
+        data['product_categories'] = get_links_menu()
+        data['menu_links'] = menu_links
+        return data
 
-            result = render_to_string(
-                'mainapp/includes/inc_products_list_content.html',
-                context=data,
-                request=request)
 
-            return JsonResponse({'result': result})
