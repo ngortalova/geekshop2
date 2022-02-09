@@ -1,6 +1,33 @@
 {% load static %}
 {% load my_tags %}
+{% block other_js %}
+<script src="{% static 'js/main_scripts.js' %}"></script>
+{% endblock %}
 
+{% if request.resolver_match.url_name == 'index'%}
+    {% include 'mainapp/include/inc_hot_product.html' %}
+{% else %}
+
+<div class="details-products">
+    <div class="details-slider">
+        <div class="slider-product">
+            <img src="{{ object_list.0.image|media_folder_products }}" class="slider-product">
+        </div>
+    </div>
+    <div class="description">
+        <h3 class="big-bold">{{ object_list.0.short_description }}</h3>
+        <h3 class="red">горячее предложение</h3>
+        <p class="price"> {{ object_list.0.price_with_discount }} <span>руб</span></p>
+        <a href="{% url 'products:product' object_list.0.pk %}" class="red-button">
+            перейти на страницу <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </a>
+        <div class="description-text">
+            <p>{{ object_list.0.name }}</p>
+            <p>{{ object_list.0.description }}</p>
+        </div>
+    </div>
+</div>
+{% endif %}
 <div class="related">
     <div class="title clearfix">
         <h2>Похожие продукты</h2>
@@ -35,6 +62,5 @@
                 </a>
             </div>
         {% endfor %}
-
     </div>
 </div>
