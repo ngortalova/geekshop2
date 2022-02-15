@@ -1,0 +1,53 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+{% load my_tags %}
+
+{% block 'content' %}
+<div class="details">
+	{% include 'mainapp/include/inc_submenu.html' %}
+	<div class="details-products">
+        <div class="details-slider">
+            <div class="slider-product">
+                <img class="details-slider" src="{{ product.image|media_folder_products }}">
+            </div>
+        </div>
+
+        <div class="description">
+            <h3 class="big-bold">{{ product.short_description }} </h3>
+            <h3 class="red">горячее предложение</h3>
+            <p class="price"> {{ product.price_with_discount }} <span>руб</span></p>
+            <a href="{% url 'cart:add_to_cart' product.id %}" class="red-button">
+                заказать <i class="fa fa-chevron-right" aria-hidden="true"></i>
+            </a>
+            <div class="description-text">
+                <p>{{ product.name }}</p>
+                <p>{{ product.description }}</p>
+                <p>Отличное качество материалов </p>
+                <p>высочайший уровень
+                эргономики и прочность.</p>
+            </div>
+        </div>
+    </div>
+<div class="related">
+	<div class="title clearfix">
+		<h2>Похожие продукты</h2>
+		<a class="explore" href="{% url 'products:index' %}">показать все <img src="{% static 'img/arrow.png' %}" alt=""></a>
+	</div>
+	<div class="related-products clearfix">
+		{% for item in products_new %}
+			<div class="block">
+				<a href="{% url 'products:product' item.id %}"><img src="{{ item.image|media_folder_products }}" class="block" alt="">
+					<div class="text">
+						<img src="{% static 'img/icon-hover.png' %}" alt="img">
+						<h4>{{ item.category }}</h4>
+						<p>{{ item.description }} </p>
+					</div>
+				</a>
+			</div>
+		{% endfor %}
+	</div>
+</div>
+
+</div>
+<div class="clr"></div>
+{% endblock %}

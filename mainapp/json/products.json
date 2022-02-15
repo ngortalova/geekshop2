@@ -1,0 +1,65 @@
+[
+
+    {
+        "name": "лампа",
+        "description": "смотри и увидишь.",
+        "short_description": "свет во тьме.",
+        "category": "дом",
+        "price": "2000.00",
+        "price_with_discount": "1500.00",
+        "quantity": 50,
+        "image": "products_images/product-41.jpg"
+    },
+    {
+        "name": "лампа супер",
+        "description": "Пришел, увидел и ушел.",
+        "short_description": "свет во тьме.",
+        "category": "модерн",
+        "price": "2134.00",
+        "price_with_discount": "1000.00",
+        "quantity": 23,
+        "image": "products_images/product-1.jpg"
+    },
+    {
+        "name": "кресло",
+        "description": "Красивое. Яркое.",
+        "short_description": "Лучше не найдешь.",
+        "category": "дом",
+        "price": "3000.00",
+        "price_with_discount": "1700.00",
+        "quantity": 33,
+        "image": "products_images/product-2.jpg"
+    },
+    {
+        "name": "супер стул",
+        "description": "без него и жизнь не та.",
+        "short_description": "сделай перерыв.",
+        "category": "офис",
+        "price": "2000.00",
+        "price_with_discount": "1000.00",
+        "quantity": 2,
+        "image": "products_images/product-4.jpg"
+    },
+        {
+        "name": "стул",
+        "description": "сиди пока сидится.",
+        "short_description": "не вставай. сиди.",
+        "category": "классика",
+        "price": "7777.00",
+        "price_with_discount": "777.00",
+        "quantity": 77,
+        "image": "products_images/product-21.jpg"
+    },
+
+        {
+        "name": "штука",
+        "description": "ух ты, какая вещь",
+        "short_description": "хватай, а то разберут.",
+        "category": "модерн",
+        "price": "44444.00",
+        "price_with_discount": "4444.00",
+        "quantity": 44,
+        "image": "products_images/product-3.jpg"
+    }
+
+]
