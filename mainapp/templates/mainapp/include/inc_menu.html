@@ -1,0 +1,60 @@
+<div class="header clearfix">
+
+    <a href="{% url 'index' %}" class="logo"></a>
+    <ul class="menu">
+        {% for link in menu_links %}
+        <li><a href="{% url link.view_name %}"
+               {% if request.resolver_match.view_name in link.active_if %}
+               class="active" {% endif %}
+        >{{ link.name }}</a></li>
+        {% endfor %}
+        {% if user.is_authenticated %}
+        <li>
+           <div class="dropdown">
+               <a class="dropdown-toggle" href="" data-toggle="dropdown">
+                   {{ user.first_name|default:'Пользователь' }}
+                   <span class="caret"></span>
+               </a>
+               <ul class="dropdown-menu">
+                   <li>
+                       <a href="{% url 'auth:edit' %}">
+                           профиль
+                       </a>
+                   </li>
+                   <li>
+                       <a href="{% url 'ordersapp:list' %}">
+                           заказы
+                       </a>
+                   </li>
+                   <li>
+                       <a href="{% url 'auth:logout' %}">
+                           выйти
+                       </a>
+                   </li>
+               </ul>
+           </div>
+        </li>
+        {% else %}
+        <li>
+            <a href="{% url 'auth:login' %}">войти</a>
+        </li>
+        <li>
+              <a href="{% url 'auth:register' %}">зарегистрироваться</a>
+        </li>
+        {% endif %}
+        {% if user.is_superuser %}
+            <li>
+              <a href="{% url 'adminapp:categories' %}">админка</a>
+            </li>
+        {% endif %}
+        <li>
+            <a href="{% url 'cart:view' %}"> Корзина
+        {% if request.user.cart.has_items %}
+                ({{ request.user.cart.amount }}шт, {{request.user.cart.total_cost}}р)
+        {% endif %}</a>
+        </li>
+
+     </ul>
+
+    <a href="#" class="search"></a>
+</div>
